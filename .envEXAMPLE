@@ -1,0 +1,5 @@
+DB_NAME=techpress_db
+DB_ADDR=localhost
+DB_USER=root
+DB_PW=
+SECRET=
