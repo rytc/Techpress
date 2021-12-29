@@ -1,2 +1,8 @@
 
 <p>Hello world!</p>
+<ul>
+
+{{#each posts}}
+        <li>{{title}} - posted by {{'User.username'}} at {{createdAt}} - {{body}}</li>
+    {{/each}}
+</ul>

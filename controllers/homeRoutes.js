@@ -4,11 +4,22 @@ const { User, Post } = require('../models')
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
 const helpers = require('../helpers')
+
 router.get('/', async (req, res) => {
     let viewData = {
         isLoggedIn: req.session.loggedIn ? true : false,
         username: req.session.loggedIn ? req.session.username : "ERROR"
     }
+
+    let posts = await Post.findAll({
+        raw:true, 
+        include: [{model: User, attributes: ['username']}],
+        order: [['createdAt', 'DESC']]
+    
+    })
+    console.log(posts);
+    viewData.posts = posts;
+
     res.render('index', viewData);
 })
 
@@ -43,7 +54,7 @@ router.get('/dashboard', helpers.isLoggedIn, async (req, res) => {
         username: req.session.loggedIn ? req.session.username : "ERROR"
     }
 
-    let posts = await Post.findAll({raw: true, where: {uid: req.session.userId}});
+    let posts = await Post.findAll({raw: true, where: {uid: req.session.userId}, order: [['createdAt', 'DESC']]});
     viewData.posts = posts;
     console.log(posts);
 
