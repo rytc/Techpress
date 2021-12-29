@@ -1,25 +1,5 @@
 
 <h1>Dashboard</h1>
+<a href="/newpost">Create a new post</a>
 
 <p id="content"></p>
-
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script>
-
-    async function getPosts() {
-        try {
-            const { data: user} = await axios.get('/api/user/dashboard', {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            })
-
-            document.getElementById('content').innerHTML = "Logged in!";
-        } catch (err) {
-            location = '/login'
-        }
-    } 
-
-    getPosts()
-
-</script>

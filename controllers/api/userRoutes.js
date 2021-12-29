@@ -18,16 +18,22 @@ router.post('/login', async (req, res) => {
             console.log(err)
         }
 
-        res.json(user ? {
-            username: user.username,
-            token: jwt.sign({id: user.id}, process.env.SECRET)
-        } : null)
+        
+        req.session.save(() => {
+            req.session.userId = user.id;
+            req.session.username = user.username;
+            req.session.loggedIn = true;
+
+            res.json(user ? {
+                username: user.username,
+                token: jwt.sign({id: user.id}, process.env.SECRET)
+            } : null)
+
+
+        })
+
+        
     })
 })
-
-router.get('/dashboard', passport.authenticate("jwt"), async (req, res) => {
-    res.json({})
-})
-
 
 module.exports = router

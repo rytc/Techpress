@@ -13,7 +13,7 @@ const app = express()
 
 app.use(session({ secret: process.env.SECRET, maxAge:null, resave: false,
   saveUninitialized: true,
-  cookie: { secure: true } }));
+  cookie: { secure: false } }));
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(express.static(path.join(__dirname, 'public')))
