@@ -4,11 +4,15 @@ const sequelize = require('../config/config.js');
 class Post extends Model {}
 
 Post.init( {
-    title: DataTypes.STRING,
-    body: DataTypes.STRING
-}, {
-    sequelize
-});
+    title: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    body: {
+        type: DataTypes.STRING,
+        allowNull: false
+    }
+}, { sequelize, modelName: 'post' });
 
 module.exports = Post
 

@@ -3,3 +3,9 @@
 <a href="/newpost">Create a new post</a>
 
 <p id="content"></p>
+
+<ul>
+    {{#each posts}}
+        <li>{{title}}</li>
+    {{/each}}
+</ul>

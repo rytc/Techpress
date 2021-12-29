@@ -1,0 +1,31 @@
+
+<h1>New Post</h1>
+<form>
+    <label for="title">Title:</label>
+    <input type="text" name="title" id="title">
+    <label for="body">Body:</label>
+    <textarea id="body" name="body"></textarea>
+    <button id="submit">Submit</button>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    document.getElementById('submit').addEventListener('click', event => {
+        event.preventDefault();
+
+        let data = {
+            title: document.getElementById('title').value,
+            body: document.getElementById('body').innerText
+        }
+
+        let headers = {
+            'Authorization': `Bearer ${localStorage.token}`
+        }
+
+        axios.post('/api/post', data, {headers: headers}).then(res => {
+            console.log("Success!");
+        }).catch(err => {
+            console.log(err);
+        })
+    })
+</script>

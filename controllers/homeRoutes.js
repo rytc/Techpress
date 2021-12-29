@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const JwtStrategy = require('passport-jwt/lib/strategy')
-const { User } = require('../models')
+const { User, Post } = require('../models')
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
 const helpers = require('../helpers')
@@ -37,14 +37,27 @@ router.get('/register', async (req, res) => {
     res.render('register');
 })
 
-router.get('/dashboard', helpers.isLoggedIn, (req, res) => {
+router.get('/dashboard', helpers.isLoggedIn, async (req, res) => {
     let viewData = {
         isLoggedIn: req.session.loggedIn ? true : false,
         username: req.session.loggedIn ? req.session.username : "ERROR"
     }
 
+    let posts = await Post.findAll({raw: true, where: {uid: req.session.userId}});
+    viewData.posts = posts;
+    console.log(posts);
+
     res.render('dashboard', viewData)
 });
+
+router.get('/newpost', helpers.isLoggedIn, (req, res) => {
+    let viewData = {
+        isLoggedIn: req.session.loggedIn ? true : false,
+        username: req.session.loggedIn ? req.session.username : "ERROR"
+    }
+
+    res.render('newpost', viewData);
+})
 
 router.get('/logout', async (req, res) => {
     if(req.session.loggedIn) {
