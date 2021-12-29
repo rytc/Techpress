@@ -1,0 +1,41 @@
+
+<h2>Login</h2>
+<p>If you don't have an account, you can <a href="/register">register here</a>.</p>
+<form>
+    <p id="err"></p>
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username">
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password">
+    <button id="login">Login</button>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+
+    document.getElementById('login').addEventListener('click', event => {
+        event.preventDefault()
+
+        let data = {
+            username: document.getElementById('username').value,
+            password: document.getElementById('password').value
+        }
+        axios.post('/api/user/login', data).then(res => {
+            localStorage.setItem('username', res.data.username);
+            localStorage.setItem('token', res.data.token);
+            //console.log(res.data);
+            location = '/';
+        }).catch(err => {
+            document.getElementById('err').innerHTML = err;
+        })
+    })
+
+    function checkLoggedInAlready() {
+        if(localStorage.getItem('token')) {
+            location = '/dashboard';
+        }
+    }
+
+    checkLoggedInAlready();
+
+</script>

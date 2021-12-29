@@ -1,24 +1,31 @@
-const dotenv = require("dotenv")
+require("dotenv").config()
+
 const express = require("express")
+const session = require("express-session")
 const path = require("path")
 const sequelize = require('./config/config.js')
 const passport = require('passport')
-const { Strategy: JWTStrategy, ExtractJwt } = require('passport-jwt')
 const {User, Post} = require('./models')
+const { Strategy: JWTStrategy, ExtractJwt } = require('passport-jwt')
 
 const hbs = require('express-handlebars').engine();
 const app = express()
 
+app.use(session({ secret: process.env.SECRET, maxAge:null, resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true } }));
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
+
+
 
 app.engine('handlebars', hbs);
 app.set('view engine', 'handlebars')
 app.set('views', './views')
 
-app.use(passport.initialize())
-app.use(passport.session())
 
 passport.use(User.createStrategy())
 
@@ -39,7 +46,9 @@ passport.use(new JWTStrategy({
 
 app.use(require("./controllers"))
 
+async function init() {
+    await sequelize.sync();
+    app.listen(process.env.PORT || 3000);
+}
 
-app.listen(process.env.PORT || 3000, () => {
-    sequelize.sync();
-})
+init()
