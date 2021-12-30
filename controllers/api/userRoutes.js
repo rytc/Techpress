@@ -8,7 +8,7 @@ router.post('/register', async (req, res) => {
         if(err) { 
             console.log(err); 
         }
-        res.sendStatus(200);
+        res.redirect('/login');
     })
 })
 

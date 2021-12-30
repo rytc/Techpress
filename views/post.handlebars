@@ -1,0 +1,46 @@
+
+{{#with post}}
+<h1>{{title}}</h1>
+<sub>Posted by {{'User.username'}} at {{createdAt}}</sub>
+<p>{{body}}</p>
+{{/with}}
+
+
+{{#if isLoggedIn}}
+    <form>
+        <label for="comment_body">Comment:</label>
+        <textarea name="comment_body" id="comment_body" cols="30" rows="3"></textarea>
+        <button id="submit_comment">Submit</button>
+    </form>
+{{else}}
+<p>Login to post a comment</p>
+{{/if}}
+
+<ul>
+{{#each comments}}
+    <li>{{body}} - {{username}} at {{createdAt}}</li>
+{{/each}}
+</ul>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+
+    document.getElementById('submit_comment').addEventListener('click', event => {
+        event.preventDefault();
+
+        let data = {
+            body: document.getElementById('comment_body').value,
+        };
+
+        let headers = {
+            'Authorization': `Bearer ${localStorage.token}`
+        }
+
+        axios.post('/api/comment/{{post.id}}', data, {headers: headers}).then(res => {
+            location = '/post/{{post.id}}';
+        }).catch(err => {
+            console.log(err);
+        })
+    })
+
+</script>

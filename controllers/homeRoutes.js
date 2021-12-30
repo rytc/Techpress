@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const JwtStrategy = require('passport-jwt/lib/strategy')
-const { User, Post } = require('../models')
+const { User, Post, Comment } = require('../models')
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
 const helpers = require('../helpers')
@@ -13,7 +13,6 @@ router.get('/', async (req, res) => {
 
     let posts = await Post.findAll({
         raw:true, 
-        include: [{model: User, attributes: ['username']}],
         order: [['createdAt', 'DESC']]
     
     })
@@ -68,6 +67,24 @@ router.get('/newpost', helpers.isLoggedIn, (req, res) => {
     }
 
     res.render('newpost', viewData);
+})
+
+router.get('/post/:id', async (req, res) => {
+    let viewData = {
+        isLoggedIn: req.session.loggedIn ? true : false,
+        username: req.session.loggedIn ? req.session.username : "ERROR"
+    }
+
+    let post = await Post.findOne({
+        raw:true,
+        include: [{model: User, attributes: ['username']}],
+        where: {id: req.params.id}});
+    viewData.post = post;
+
+    let comments = await Comment.findAll({raw: true, where: {uid: req.params.id}});
+    viewData.comments = comments;
+
+    res.render('post', viewData);
 })
 
 router.get('/logout', async (req, res) => {

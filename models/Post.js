@@ -14,5 +14,5 @@ Post.init( {
     }
 }, { sequelize, modelName: 'post' });
 
-module.exports = Post
+module.exports = Post;
 

@@ -3,6 +3,6 @@
 <ul>
 
 {{#each posts}}
-        <li>{{title}} - posted by {{'User.username'}} at {{createdAt}} - {{body}}</li>
+        <li><a href="/post/{{id}}">{{title}}</a> - posted by {{'User.username'}} at {{createdAt}}</li>
     {{/each}}
 </ul>
