@@ -23,7 +23,12 @@ router.put('/:id', passport.authenticate("jwt"), async (req, res) => {
 
 router.delete('/:id', passport.authenticate('jwt'), async (req, res) => {
     let post = await Post.destroy({where: {id: req.params.id, uid: req.session.userId}});
-    let comments = await Comment.destroy({where: {uid: req.params.id}});
+    // Since the previous statement limits to posts by the userId
+    // If there was a post deleted, then delete the comments
+    // prevents random users from deleting comments from posts that are not theirs
+    if(post > 0) {
+        let comments = await Comment.destroy({where: {uid: req.params.id}});
+    }
     res.sendStatus(200);
 })
 
