@@ -5,6 +5,12 @@
     {{#each posts}}
         <li class="list-group-item">
             <div class="ms-2 me-auto">
-                <div class="fw-bold"><a href="/post/{{id}}">{{title}}</a></div> Posted by <strong>{{'User.username'}}</strong> at {{createdAt}}</li>
+                <div class="fw-bold">
+                    <a href="/post/{{id}}">{{title}}</a>
+                </div>
+                <sub>Posted by <strong>{{'User.username'}}</strong> at {{createdAt}}</sub>
+                <p>{{body}}</p>
+            </div>
+        </li>
     {{/each}}
 </ul>
