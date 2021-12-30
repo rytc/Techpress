@@ -1,11 +1,12 @@
 
 <h1>Dashboard</h1>
-<a href="/newpost">Create a new post</a>
+<p>Welcome <strong>{{username}}</strong>, <a href="/newpost">Create a new post</a>
+</p>
 
-<p id="content"></p>
+<h4>Your Posts</h4>
 
-<ul>
+<ul class="list-group">
     {{#each posts}}
-        <li><a href="/editpost/{{id}}">{{title}}</a></li>
+        <li class="list-group-item"><a href="/editpost/{{id}}">{{title}}</a></li>
     {{/each}}
 </ul>

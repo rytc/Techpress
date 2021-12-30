@@ -1,11 +1,15 @@
 
 <h1>New Post</h1>
 <form>
-    <label for="title">Title:</label>
-    <input type="text" name="title" id="title">
-    <label for="body">Body:</label>
-    <textarea id="body" name="body"></textarea>
-    <button id="submit">Submit</button>
+    <div class="mb-3">
+        <label class="form-label" for="title">Title:</label>
+        <input class="form-control" type="text" name="title" id="title">
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="body">Body:</label>
+        <textarea class="form-control" id="body" name="body"></textarea>
+    </div>
+    <button class="btn btn-primary" id="submit">Submit</button>
 </form>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

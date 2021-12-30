@@ -1,8 +1,10 @@
 
-<p>Hello world!</p>
-<ul>
+<p>Welcome to the <strong>Techpress</strong> tech blog!</p>
 
-{{#each posts}}
-        <li><a href="/post/{{id}}">{{title}}</a> - posted by {{'User.username'}} at {{createdAt}}</li>
+<ul class="list-group">
+    {{#each posts}}
+        <li class="list-group-item">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold"><a href="/post/{{id}}">{{title}}</a></div> Posted by <strong>{{'User.username'}}</strong> at {{createdAt}}</li>
     {{/each}}
 </ul>

@@ -2,12 +2,15 @@
 <h2>Login</h2>
 <p>If you don't have an account, you can <a href="/register">register here</a>.</p>
 <form>
-    <p id="err"></p>
-    <label for="username">Username:</label>
-    <input type="text" name="username" id="username">
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password">
-    <button id="login">Login</button>
+    <div class="mb-3">
+        <label for="username" class="form-label">Username:</label>
+        <input type="text" name="username" class="form-control" id="username">
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="password">Password</label>
+        <input type="password" class="form-control" name="password" id="password">
+    </div>
+    <button class="btn btn-primary" id="login">Login</button>
 </form>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -23,10 +26,9 @@
         axios.post('/api/user/login', data).then(res => {
             localStorage.setItem('username', res.data.username);
             localStorage.setItem('token', res.data.token);
-            //console.log(res.data);
             location = '/dashboard';
         }).catch(err => {
-            document.getElementById('err').innerHTML = err;
+            console.log(err);
         })
     })
 
