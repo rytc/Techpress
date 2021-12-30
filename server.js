@@ -11,7 +11,7 @@ const { Strategy: JWTStrategy, ExtractJwt } = require('passport-jwt')
 const hbs = require('express-handlebars').engine();
 const app = express()
 
-app.use(session({ secret: process.env.SECRET, maxAge:null, resave: false,
+app.use(session({ secret: process.env.SECRET, maxAge:60*60&1000, resave: false,
   saveUninitialized: true,
   cookie: { secure: false, maxAge: 60*60*1000 } })); // Auto logout after an hour
 app.use(passport.initialize())
@@ -20,12 +20,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
-
-
 app.engine('handlebars', hbs);
 app.set('view engine', 'handlebars')
 app.set('views', './views')
-
 
 passport.use(User.createStrategy())
 
