@@ -5,6 +5,8 @@
 ## Description
 This is a tech blog made with Node, Express, MySQL, Sequelize, Passport, Handlebars, and Bootstrap
 
+[Live site](https://rytc-techpress.herokuapp.com/)
+
 <img src="https://github.com/rytc/Techpress/blob/main/screenshots/techpress.png" alt="Techpress">
 
 ## Table of Contents
