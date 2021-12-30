@@ -69,6 +69,18 @@ router.get('/newpost', helpers.isLoggedIn, (req, res) => {
     res.render('newpost', viewData);
 })
 
+router.get('/editpost/:id', helpers.isLoggedIn, async (req, res) => {
+    let viewData = {
+        isLoggedIn: req.session.loggedIn ? true : false,
+        username: req.session.loggedIn ? req.session.username : "ERROR"
+    }
+
+    let post = await Post.findOne({raw: true, where: {id: req.params.id}});
+    viewData.post = post;
+
+    res.render('editpost', viewData);
+})
+
 router.get('/post/:id', async (req, res) => {
     let viewData = {
         isLoggedIn: req.session.loggedIn ? true : false,
